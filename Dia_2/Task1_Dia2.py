@@ -9,3 +9,5 @@ def Numero (numero): #A função
      return f"está aqui a raiz quadrada do {numero}, é {raiz_quadrada}" #Mostragem do resultado
 
 print(Numero (numero))
+
+#conseguir fazer :D
