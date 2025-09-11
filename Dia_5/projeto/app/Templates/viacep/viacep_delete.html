@@ -1,0 +1,14 @@
+<html>
+
+    <!--deleta e tem botão de confirmção para não haver error-->
+
+    <h2>Deseja realmente deletar este CEP?</h2>
+    <p><strong>{{ object.cep }}</strong> - {{ object.logradouro }}, {{ object.bairro }}</p>
+
+    <form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar Exclusão</button>
+    </form>
+
+    <a href="{% url 'viacep:list' %}">Cancelar</a>
+</html>

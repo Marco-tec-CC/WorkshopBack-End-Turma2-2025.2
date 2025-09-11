@@ -5,10 +5,13 @@ from .models import ViaCep
 from django.views.generic import FormView, ListView, DeleteView, DetailView
 from django.urls import reverse_lazy
 
+def base(request):
+    return render(request, 'base.html')
 
-class ViaCepForm(FormView):
-    template_name = ViaCepForm
-    success_url = reverse_lazy
+class ViaCepFormView(FormView):
+    template_name = "viacep/viacep_form.html"
+    success_url = reverse_lazy("form")
+    models = ViaCepForm
 
     def form_valid(self, form):
         cep = form.cleaned_data['cep'].replace('-','').strip() 
@@ -18,7 +21,6 @@ class ViaCepForm(FormView):
         if response.status_code == 200:
             data = response.json()
             if "erro" not in data:
-                #salvar ou atualizar no banco
                 cep_obj, created = ViaCep.objects.update_or_create(
                     cep=cep,
                     defaults={
@@ -39,23 +41,19 @@ class ViaCepForm(FormView):
         
         return super().form_valid(form)
     
-    class ViaCepListView(ListView):
+class ViaCepListView(ListView):
         model = ViaCep
-        template_name = "viacep/viacep_detail.html"
+        template_name = "viacep/viacep_list.html"
         context_object_name = "ceps"
     
-    class ViaCepDetailView(DetailView):
+class ViaCepDetailView(DetailView):
         model = ViaCep 
         template_name = "viacep/viacep_detail.html"
         context_object_name = "cep"
 
-    class ViaCepDeleteView(DeleteView):
+class ViaCepDeleteView(DeleteView):
         model = ViaCep
         template_name = "viacep/viacep_delete.html"
         context_object_name = reverse_lazy
 
-    class ViacepformView(FormView):
-        model = ViaCep
-        template_name = "viacep/viacep_form.html"
-        context_object_name = reverse_lazy
             

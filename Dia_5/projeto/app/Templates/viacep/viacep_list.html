@@ -1,0 +1,38 @@
+<html>
+
+
+    {% extends "base.html" %}
+
+    {% block title %}Lista de CEPs{% endblock %}
+
+    {% block content %}
+    <h2>Lista de CEPs</h2>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>CEP</th>
+            <th>Logradouro</th>
+            <th>Bairro</th>
+            <th>Cidade</th>
+            <th>UF</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cep in ceps %}
+        <tr>
+            <td><a href="{% url 'detail' cep.pk %}">{{ cep.cep }}</a></td>
+            <td>{{ cep.logradouro }}</td>
+            <td>{{ cep.bairro }}</td>
+            <td>{{ cep.localidade }}</td>
+            <td>{{ cep.uf }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Nenhum CEP cadastrado ainda.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    {% endblock %}
+
+</html>
